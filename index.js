@@ -27,12 +27,12 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:date?", function (req, res) {
   let date = req.params.date;
 
-  if (!date) {
+  if (!req.params.date) {
     res.json({
       unix: new Date().getTime(),
       utc: new Date().toUTCString(),
     });
-  } else if (date.includes("-")) {
+  } else if (req.params.date.includes("-")) {
     res.json({
       unix: new Date(date).getTime(),
       utc: new Date(date).toUTCString(),
