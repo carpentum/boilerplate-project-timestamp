@@ -34,11 +34,11 @@ app.get("/api/:date?", function (req, res) {
   } else if (input.includes("-")) {
     responseObject.unix = new Date(input).getTime();
     responseObject.utc = new Date(input).toUTCString();
-  } else if (parseInt(input) !== '') {
+  } else if (parseInt(input) !== "") {
     input = parseInt(input);
     responseObject.unix = new Date(input).getTime();
     responseObject.utc = new Date(input).toUTCString();
-  } else (!responseObject.unix || !responseObject.utc) {
+  } else {
     responseObject.error = "Invalid";
   }
   res.json(responseObject);
