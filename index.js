@@ -34,8 +34,8 @@ app.get("/api/:date?", function (req, res) {
     });
   } else if (date.includes("-")) {
     res.json({
-      unix: new Date().getTime(date),
-      utc: new Date().toUTCString(date),
+      unix: new Date(date).getTime(),
+      utc: new Date(date).toUTCString(),
     });
     //res.json({ error: "Invalid Date" });
   } else {
