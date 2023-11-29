@@ -25,12 +25,12 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", function (req, res) {
-  if (req.params.date && req.params.date.includes("-")) {
+  if (req.params.date) {
+    let date = parseInt(req.params.date);
     res.json({
-      unix: new Date(req.params.date).getTime(),
-      utc: new Date(req.params.date).toUTCString(),
+      unix: new Date(date).getTime(),
+      utc: new Date(date).toUTCString(),
     });
-    //res.json({ error: "Invalid Date" });
   } else {
     res.json({
       unix: new Date().getTime(),
