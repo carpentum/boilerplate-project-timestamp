@@ -35,11 +35,10 @@ app.get("/api/:date?", function (req, res) {
       unix: new Date(req.params.date).getTime(),
       utc: new Date(req.params.date).toUTCString(),
     });
-  } else if (parseInt(req.params.date) !== "") {
-    let date = parseInt(req.params.date);
+  } else if (new Date(req.params.date)) {
     res.json({
-      unix: new Date(date).getTime(),
-      utc: new Date(date).toUTCString(),
+      unix: new Date(req.params.date).getTime(),
+      utc: new Date(req.params.date).toUTCString(),
     });
   } else {
     res.json({
