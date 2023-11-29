@@ -25,7 +25,7 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", function (req, res) {
-  let input = request.params.date;
+  let input = req.params.date;
   let responseObject = {};
 
   if (input.includes("-")) {
