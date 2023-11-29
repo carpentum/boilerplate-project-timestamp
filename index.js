@@ -27,8 +27,8 @@ app.get("/api/hello", function (req, res) {
 app.get("/api/:date?", function (req, res) {
   if (!req.params.date) {
     res.json({
-      unix: moment().unix(),
-      utc: moment().format("ddd, DD MMM YYYY HH:mm:ss") + " GMT",
+      unix: new Date().getTime(),
+      utc: new Date().toUTCString(),
     });
   } else if (!moment(req.params.date, "x", true).isValid()) {
     res.json({ error: "Invalid Date" });
