@@ -25,18 +25,28 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", function (req, res) {
-  if (req.params.date) {
-    let date = parseInt(req.params.date);
-    res.json({
-      unix: new Date(date).getTime(),
-      utc: new Date(date).toUTCString(),
-    });
+  let input = request.params.date;
+  let responseObject = {};
+
+  if (input.includes("-")) {
+    responseObject.unix = new Date(input).getTime();
+    responseObject.utc = new Date(input).toUTCString();
   } else {
-    res.json({
-      unix: new Date().getTime(),
-      utc: new Date().toUTCString(),
-    });
+    input = parseInt(input);
+    responseObject.unix = new Date(input).getTime();
+    responseObject.utc = new Date(input).toUTCString();
   }
+
+  if (!responseObject.unix || !responseObject.utc) {
+    res.json({ error: "Invalid" });
+  }
+  res.json(responseObject);
+});
+
+app.get("/api/", function (req, res) {
+  responseObject.unix = new Date().getTime();
+  responseObject.utc = new Date().toUTCString();
+  res.json(responseObject);
 });
 
 // listen for requests :)
