@@ -38,15 +38,11 @@ app.get("/api/:date?", function (req, res) {
     input = parseInt(input);
     responseObject.unix = new Date(input).getTime();
     responseObject.utc = new Date(input).toUTCString();
-  }
-
-  if (!responseObject.unix || !responseObject.utc) {
-    res.json({ error: "Invalid" });
+  } else if (!responseObject.unix || !responseObject.utc) {
+    responseObject.error = "Invalid";
   }
   res.json(responseObject);
 });
-
-app.get("/api/", function (req, res) {});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
