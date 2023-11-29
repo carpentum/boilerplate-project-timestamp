@@ -25,23 +25,27 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", function (req, res) {
-  let input = req.params.date;
-  let responseObject = {};
-
-  if (input === "") {
-    responseObject.unix = new Date().getTime();
-    responseObject.utc = new Date().toUTCString();
-  } else if (input.includes("-")) {
-    responseObject.unix = new Date(input).getTime();
-    responseObject.utc = new Date(input).toUTCString();
-  } else if (parseInt(input) !== "") {
-    input = parseInt(input);
-    responseObject.unix = new Date(input).getTime();
-    responseObject.utc = new Date(input).toUTCString();
+  if (!req.params.date) {
+    res.json({
+      unix: new Date().getTime(),
+      utc: new Date().toUTCString(),
+    });
+  } else if (req.params.date.includes("-")) {
+    res.json({
+      unix: new Date(req.params.date).getTime(),
+      utc: new Date(req.params.date).toUTCString(),
+    });
+  } else if (parseInt(req.params.date) !== "") {
+    let date = parseInt(req.params.date);
+    res.json({
+      unix: new Date(date).getTime(),
+      utc: new Date(date).toUTCString(),
+    });
   } else {
-    responseObject.error = "Invalid";
+    res.json({
+      error: "Invalid",
+    });
   }
-  res.json(responseObject);
 });
 
 // listen for requests :)
