@@ -25,13 +25,19 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", function (req, res) {
-  if (!req.params.date) {
+  let date = req.params.date;
+
+  if (!date) {
     res.json({
       unix: new Date().getTime(),
       utc: new Date().toUTCString(),
     });
-  } else if (!moment(req.params.date, "x", true).isValid()) {
-    res.json({ error: "Invalid Date" });
+  } else if (date.includes("-")) {
+    res.json({
+      unix: new Date().getTime(date),
+      utc: new Date().toUTCString(date),
+    });
+    //res.json({ error: "Invalid Date" });
   } else {
     let date = moment(req.params.date, "x", true);
     res.json({
