@@ -16,35 +16,36 @@ app.use(express.static("public"));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get("/", function (req, res) {
-  res.sendFile(__dirname + "/views/index.html");
+  res.status(200).sendFile(__dirname + "/views/index.html");
 });
 
 // your first API endpoint...
 app.get("/api/hello", function (req, res) {
-  res.json({ greeting: "hello API" });
+  res.status(200).json({ greeting: "hello API" });
 });
 
 app.get("/api/:date?", function (req, res) {
   if (!req.params.date) {
-    res.json({
+    return res.status(200).json({
       unix: new Date().getTime(),
       utc: new Date().toUTCString(),
     });
-  } else if (req.params.date.includes("-")) {
-    res.json({
+  }
+  if (req.params.date.includes("-")) {
+    return res.status(200).json({
       unix: new Date(req.params.date).getTime(),
       utc: new Date(req.params.date).toUTCString(),
     });
-  } else if (new Date(req.params.date)) {
-    res.json({
+  }
+  if (new Date(req.params.date)) {
+    return res.status(200).json({
       unix: new Date(parseInt(req.params.date)).getTime(),
       utc: new Date(parseInt(req.params.date)).toUTCString(),
     });
-  } else {
-    res.json({
-      error: "Invalid",
-    });
   }
+  res.status(400).json({
+    error: "Invalid",
+  });
 });
 
 // listen for requests :)
